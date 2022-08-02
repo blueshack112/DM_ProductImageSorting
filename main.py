@@ -1,13 +1,7 @@
-import math
 import os.path
-from os import DirEntry
-import numpy
+from typing import List
 import pandas as pd
-
 from variales import IMAGES_FOLDER_ROOT, PRODUCT_CSV_PATH
-import sys
-
-sys.setrecursionlimit(10000000)
 
 
 def main():
@@ -28,14 +22,16 @@ def main():
 def get_image_files(images):
     image_files = list()
     for image in images:
-        image_file = find_image_file(image)
+        image_paths = crawl_dir(IMAGES_FOLDER_ROOT)
 
 
-def find_image_file(image):
-    for path, subdirs, files in os.walk(IMAGES_FOLDER_ROOT):
+def crawl_dir(dir_root) -> List[str]:
+    paths = list()
+    for path, subdirs, files in os.walk(dir_root):
         for name in files:
-            print(os.path.join(path, name))
+            paths.append(os.path.join(path, name))
 
+    return paths
 
 
 if __name__ == '__main__':
